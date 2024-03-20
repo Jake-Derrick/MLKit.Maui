@@ -2,11 +2,11 @@
 using Android.Graphics;
 using Android.Runtime;
 using Java.Util;
-using Xamarin.Google.MLKit.Vision.Barcode.Common;
 using Xamarin.Google.MLKit.Vision.BarCode;
 using Xamarin.Google.MLKit.Vision.Common;
+using AndroidBarcode = Xamarin.Google.MLKit.Vision.Barcode.Common.Barcode;
 
-namespace MLKit.Maui;
+namespace MLKit.Maui.Barcode;
 
 /// <inheritdoc />
 public class BarcodeService : IBarcodeService
@@ -27,6 +27,19 @@ public class BarcodeService : IBarcodeService
 
         using var stream = await imageFile.OpenReadAsync();
         using var bitmap = BitmapFactory.DecodeStream(stream);
+
+        return await GetBarcodesFromBitmap(bitmap);
+    }
+
+    /// <inheritdoc />
+    public async Task<List<BarcodeResult>> GetBarcodesFromImage(byte[] imageBytes)
+    {
+        using var bitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+        return await GetBarcodesFromBitmap(bitmap);
+    }
+
+    private async Task<List<BarcodeResult>> GetBarcodesFromBitmap(Bitmap? bitmap)
+    {
         if (bitmap is null)
             return [];
 
@@ -51,16 +64,16 @@ public class BarcodeService : IBarcodeService
 
         foreach (var barcodeObj in barcodes.ToArray())
         {
-            var barcode = barcodeObj.JavaCast<Barcode>();
+            var barcode = barcodeObj.JavaCast<AndroidBarcode>();
 
             var bounds = barcode.BoundingBox;
-            var mauiBounds = new Microsoft.Maui.Graphics.Rect(bounds.Left, bounds.Top, bounds.Height(), bounds.Width());
+            var mauiBounds = new Microsoft.Maui.Graphics.Rect(bounds.Left, bounds.Top, bounds.Width(), bounds.Height());
 
             List<Microsoft.Maui.Graphics.Point> cornerPoints = [];
             foreach (var cornerPoint in barcode.GetCornerPoints())
                 cornerPoints.Add(new Microsoft.Maui.Graphics.Point(cornerPoint.X, cornerPoint.Y));
 
-            barcodeResults.Add(new(barcode.DisplayValue, barcode.RawValue, barcode.GetRawBytes(), mauiBounds, cornerPoints, BarcodeExtensions.ToMauiFormat(barcode.Format)));
+            barcodeResults.Add(new(barcode.DisplayValue, barcode.RawValue, barcode.GetRawBytes(), mauiBounds, cornerPoints, barcode.ToMauiFormat()));
         }
 
         return barcodeResults;

@@ -1,4 +1,4 @@
-﻿using MLKit.Maui;
+﻿using MLKit.Maui.Barcode;
 
 namespace ExampleApp
 {

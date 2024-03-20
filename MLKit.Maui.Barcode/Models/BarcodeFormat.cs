@@ -1,4 +1,4 @@
-﻿namespace MLKit.Maui;
+﻿namespace MLKit.Maui.Barcode;
 
 public enum BarcodeFormat
 {

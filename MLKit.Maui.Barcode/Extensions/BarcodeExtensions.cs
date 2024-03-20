@@ -1,8 +1,8 @@
 ﻿#if ANDROID
-using Xamarin.Google.MLKit.Vision.Barcode.Common;
+using AndroidBarcode = Xamarin.Google.MLKit.Vision.Barcode.Common.Barcode;
 #endif
 
-namespace MLKit.Maui;
+namespace MLKit.Maui.Barcode;
 
 public static class BarcodeExtensions
 {
@@ -11,7 +11,7 @@ public static class BarcodeExtensions
     public static int[] ToAndroidFormat(this HashSet<BarcodeFormat> formats)
     {
         if (formats.Count == 0)
-            return [Barcode.FormatAllFormats];
+            return [AndroidBarcode.FormatAllFormats];
 
         var result = new List<int>();
         foreach (BarcodeFormat format in formats)
@@ -24,42 +24,44 @@ public static class BarcodeExtensions
     {
         return format switch
         {
-            BarcodeFormat.Code_128 => Barcode.FormatCode128,
-            BarcodeFormat.Code_39 => Barcode.FormatCode39,
-            BarcodeFormat.Code_93 => Barcode.FormatCode93,
-            BarcodeFormat.Codabar => Barcode.FormatCodabar,
-            BarcodeFormat.EAN_13 => Barcode.FormatEan13,
-            BarcodeFormat.EAN_8 => Barcode.FormatEan8,
-            BarcodeFormat.ITF => Barcode.FormatItf,
-            BarcodeFormat.UPC_A => Barcode.FormatUpcA,
-            BarcodeFormat.UPC_E => Barcode.FormatUpcE,
-            BarcodeFormat.QR => Barcode.FormatQrCode,
-            BarcodeFormat.PDF_417 => Barcode.FormatPdf417,
-            BarcodeFormat.Aztec => Barcode.FormatAztec,
-            BarcodeFormat.DataMatrix => Barcode.FormatDataMatrix,
-            BarcodeFormat.All => Barcode.FormatAllFormats,
+            BarcodeFormat.Code_128 => AndroidBarcode.FormatCode128,
+            BarcodeFormat.Code_39 => AndroidBarcode.FormatCode39,
+            BarcodeFormat.Code_93 => AndroidBarcode.FormatCode93,
+            BarcodeFormat.Codabar => AndroidBarcode.FormatCodabar,
+            BarcodeFormat.EAN_13 => AndroidBarcode.FormatEan13,
+            BarcodeFormat.EAN_8 => AndroidBarcode.FormatEan8,
+            BarcodeFormat.ITF => AndroidBarcode.FormatItf,
+            BarcodeFormat.UPC_A => AndroidBarcode.FormatUpcA,
+            BarcodeFormat.UPC_E => AndroidBarcode.FormatUpcE,
+            BarcodeFormat.QR => AndroidBarcode.FormatQrCode,
+            BarcodeFormat.PDF_417 => AndroidBarcode.FormatPdf417,
+            BarcodeFormat.Aztec => AndroidBarcode.FormatAztec,
+            BarcodeFormat.DataMatrix => AndroidBarcode.FormatDataMatrix,
+            BarcodeFormat.All => AndroidBarcode.FormatAllFormats,
             _ => (int)BarcodeFormat.Unknown
         };
     }
 
-    public static BarcodeFormat ToMauiFormat(int androidFormat)
+    public static BarcodeFormat ToMauiFormat(this AndroidBarcode androidBarcode) => ToMauiFormat(androidBarcode.Format);
+
+    private static BarcodeFormat ToMauiFormat(int androidFormat)
     {
         return androidFormat switch
         {
-            Barcode.FormatCode128 => BarcodeFormat.Code_128,
-            Barcode.FormatCode39 => BarcodeFormat.Code_39,
-            Barcode.FormatCode93 => BarcodeFormat.Code_93,
-            Barcode.FormatCodabar => BarcodeFormat.Codabar,
-            Barcode.FormatEan13 => BarcodeFormat.EAN_13,
-            Barcode.FormatEan8 => BarcodeFormat.EAN_8,
-            Barcode.FormatItf => BarcodeFormat.ITF,
-            Barcode.FormatUpcA => BarcodeFormat.UPC_A,
-            Barcode.FormatUpcE => BarcodeFormat.UPC_E,
-            Barcode.FormatQrCode => BarcodeFormat.QR,
-            Barcode.FormatPdf417 => BarcodeFormat.PDF_417,
-            Barcode.FormatAztec => BarcodeFormat.Aztec,
-            Barcode.FormatDataMatrix => BarcodeFormat.DataMatrix,
-            Barcode.FormatAllFormats => BarcodeFormat.All,
+            AndroidBarcode.FormatCode128 => BarcodeFormat.Code_128,
+            AndroidBarcode.FormatCode39 => BarcodeFormat.Code_39,
+            AndroidBarcode.FormatCode93 => BarcodeFormat.Code_93,
+            AndroidBarcode.FormatCodabar => BarcodeFormat.Codabar,
+            AndroidBarcode.FormatEan13 => BarcodeFormat.EAN_13,
+            AndroidBarcode.FormatEan8 => BarcodeFormat.EAN_8,
+            AndroidBarcode.FormatItf => BarcodeFormat.ITF,
+            AndroidBarcode.FormatUpcA => BarcodeFormat.UPC_A,
+            AndroidBarcode.FormatUpcE => BarcodeFormat.UPC_E,
+            AndroidBarcode.FormatQrCode => BarcodeFormat.QR,
+            AndroidBarcode.FormatPdf417 => BarcodeFormat.PDF_417,
+            AndroidBarcode.FormatAztec => BarcodeFormat.Aztec,
+            AndroidBarcode.FormatDataMatrix => BarcodeFormat.DataMatrix,
+            AndroidBarcode.FormatAllFormats => BarcodeFormat.All,
             _ => BarcodeFormat.Unknown
         };
     }
