@@ -9,6 +9,15 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>MLKit Barcode Scanner</Title>
+    <Description>Scans barcodes from an image.</Description>
+    <PackageProjectUrl>https://github.com/Jake-Derrick/MLKit.Maui</PackageProjectUrl>
+    <PackageTags>csharp; dotnet; qr; qr-decoder; barcode; barcode-parse; maui; dotnet-maui; mlkit;</PackageTags>
+    <Authors>Jake-Derrick</Authors>
+    <Version>0.1.0-alpha</Version>
+    <PackageReleaseNotes>Initial alpha release</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
