@@ -13,9 +13,11 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>MLKit Barcode Scanner</Title>
     <Description>Scans barcodes from an image.</Description>
-    <PackageProjectUrl>https://github.com/Jake-Derrick/MLKit.Maui</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jake-Derrick/MLKit.Maui</RepositoryUrl>
     <PackageTags>csharp; dotnet; qr; qr-decoder; barcode; barcode-parse; maui; dotnet-maui; mlkit;</PackageTags>
     <Authors>Jake-Derrick</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
     <Version>0.1.0-alpha</Version>
     <PackageReleaseNotes>Initial alpha release</PackageReleaseNotes>
 	</PropertyGroup>
