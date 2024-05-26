@@ -1,4 +1,5 @@
 ﻿using MLKit.Maui.Barcode;
+using MLKit.Maui.TextRecognition;
 
 namespace ExampleApp
 {
@@ -20,16 +21,19 @@ namespace ExampleApp
             var file = await MediaPicker.PickPhotoAsync();
 
 #if ANDROID
-            var barcodeService = new BarcodeService([BarcodeFormat.All]);
-            var barcodes = await barcodeService.GetBarcodesFromImage(file);
+            var textRecognitionService = new TextRecognitionService();
+            var result = await textRecognitionService.GetTextFromImage(file);
+            var r = result.Success;
+            //var barcodeService = new BarcodeService([BarcodeFormat.All]);
+            //var barcodes = await barcodeService.GetBarcodesFromImage(file);
 
-            if (barcodes != null)
-            {
-                foreach (var barcode in barcodes)
-                {
-                    var r = barcode;
-                }
-            }
+            //if (barcodes != null)
+            //{
+            //    foreach (var barcode in barcodes)
+            //    {
+            //        var r = barcode;
+            //    }
+            //}
 #endif
         }
     }

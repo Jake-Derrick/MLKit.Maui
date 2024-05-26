@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MLKit.Maui.Barcode\MLKit.Maui.Barcode.csproj" />
+	  <ProjectReference Include="..\MLKit.Maui.TextRecognition\MLKit.Maui.TextRecognition.csproj" />
 	</ItemGroup>
 
 </Project>
