@@ -5,20 +5,24 @@ using MLText = Xamarin.Google.MLKit.Vision.Text;
 
 namespace MLKit.Maui.TextRecognition;
 
+/// <summary>
+/// Implementation of <see cref="ITextRecognitionService"/>
+/// </summary>
 public class TextRecognitionService : ITextRecognitionService
 {
     private readonly MLText.ITextRecognizer _textRecognizer;
 
     public TextRecognitionService()
     {
-        _textRecognizer = MLText.TextRecognition.GetClient(MLText.Latin.TextRecognizerOptions.DefaultOptions); //TODO: Set
+        _textRecognizer = MLText.TextRecognition.GetClient(MLText.Latin.TextRecognizerOptions.DefaultOptions);
     }
 
-    public async Task<TextRecognitionResult?> GetTextFromImage(FileResult imageFile)
+    /// <inheritdoc />
+    public async Task<TextRecognitionResult> GetTextFromImage(FileResult imageFile)
     {
         var status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
         if (status != PermissionStatus.Granted)
-            throw new PermissionException("StorageRead Permission Required. Please call RequestBarcodeServicePermissions before using this.");
+            throw new PermissionException("StorageRead Permission Required.");
 
         using var stream = await imageFile.OpenReadAsync();
         using var bitmap = BitmapFactory.DecodeStream(stream);
@@ -27,13 +31,13 @@ public class TextRecognitionService : ITextRecognitionService
     }
 
     /// <inheritdoc />
-    public async Task<TextRecognitionResult?> GetTextFromImage(byte[] imageBytes)
+    public async Task<TextRecognitionResult> GetTextFromImage(byte[] imageBytes)
     {
         using var bitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
         return await GetTextFromBitmap(bitmap);
     }
 
-    private async Task<TextRecognitionResult?> GetTextFromBitmap(Bitmap? bitmap)
+    private async Task<TextRecognitionResult> GetTextFromBitmap(Bitmap? bitmap)
     {
         if (bitmap is null)
             return new TextRecognitionResult() { Success = false };
@@ -80,7 +84,7 @@ public class TextRecognitionService : ITextRecognitionService
 
     private static TextRecognitionLine CreateTextRecognitionLine(MLText.Text.Line line)
     {
-        var textLine = new TextRecognitionLine(line.Text, line.Confidence, ToMauiPoints(line.GetCornerPoints()), line.Angle, new List<TextRecognitionElement>());
+        var textLine = new TextRecognitionLine(line.Text, line.Confidence, ToMauiPoints(line.GetCornerPoints()), line.Angle, []);
 
         foreach (var element in line.Elements)
         {

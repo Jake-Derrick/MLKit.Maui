@@ -53,4 +53,10 @@
 	  <ProjectReference Include="..\MLKit.Maui.TextRecognition\MLKit.Maui.TextRecognition.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="TextRecognition\TextRecognitionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

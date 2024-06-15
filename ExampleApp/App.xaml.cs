@@ -1,12 +1,11 @@
-﻿namespace ExampleApp
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿namespace ExampleApp;
 
-            MainPage = new AppShell();
-        }
+public partial class App : Application
+{
+    public App(IServiceProvider serviceProvider)
+    {
+        InitializeComponent();
+
+        MainPage = new NavigationPage(serviceProvider.GetRequiredService<MainPage>());
     }
 }
